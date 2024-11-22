@@ -1,0 +1,35 @@
+document.getElementById('ageForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Get the birthdate input value
+    const birthDate = document.getElementById('birthDate').value;
+    
+    if (birthDate) {
+        // Calculate the age
+        const birthDateObj = new Date(birthDate);
+        const today = new Date();
+        
+        let ageYears = today.getFullYear() - birthDateObj.getFullYear();
+        let ageMonths = today.getMonth() - birthDateObj.getMonth();
+        let ageDays = today.getDate() - birthDateObj.getDate();
+        
+        // Adjust for negative month or day differences
+        if (ageMonths < 0) {
+            ageYears--;
+            ageMonths += 12;
+        }
+
+        if (ageDays < 0) {
+            const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+            ageDays += prevMonth.getDate();
+            ageMonths--;
+        }
+
+        // Display the result
+        const ageResult = document.getElementById('ageResult');
+        ageResult.textContent = `You are ${ageYears} years, ${ageMonths} months, and ${ageDays} days old.`;
+        document.getElementById('result').style.display = 'block';
+    } else {
+        alert('Please enter a valid birthdate.');
+    }
+});
